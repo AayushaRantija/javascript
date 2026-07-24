@@ -37,6 +37,7 @@ input {
   border: 1px solid #490a36;
   width: 200px;
   border-radius: 5px 0 0 5px;
+  outline: 0;
 }
 
 #taskList {
@@ -53,7 +54,7 @@ ul {
 
 li {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   padding: 8px;
   border: 1px solid #6a0d5c;
   border-radius: 5px;
@@ -61,14 +62,32 @@ li {
   text-align: center;
 }
 
-button {
-  background: #ff5252;
+.delete {
+  background: #490a36;
   border-radius: 5px;
   border: none;
   padding: 10px;
   color: white;
+  margin-left: 10px;
 }
 
-button:hover {
+.delete:hover {
   background: #ff6b6b;
+}
+
+.edit {
+  background: lab(34.52% 21.81 -14.18);
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  color: white;
+  margin-left: 10px;
+}
+
+.edit:hover {
+  background: lab(45.6% 27.14 -17.76);
+}
+
+li span {
+  margin-right: auto;
 }
