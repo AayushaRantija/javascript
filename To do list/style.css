@@ -46,8 +46,7 @@ input {
   color: #6a0d5c;
 }
 
-ul {
-  list-style: none;
+ol {
   padding: 15px;
   text-align: center;
 }

@@ -1,3 +1,12 @@
+
+let tasks = [ ];
+
+function updateStorage() {
+    const tasklist = document.getElementById('taskList');
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
 function addTask() {
      const taskInput = document.getElementById("taskInput");
     const task = taskInput.value;
@@ -6,22 +15,15 @@ function addTask() {
         alert("Please enter a task.");
         return;
     }
-const newTask =document.createElement('li')
-const tasklist = document.getElementById('taskList')
 
-const taskText = document.createElement("span");
-taskText.textContent = task;
-
-newTask.appendChild(taskText)
-tasklist.appendChild(newTask)
 taskInput.value = ''
 
-deleteTask(newTask);
-editTask(newTask, taskText);
-
+tasks.push(task);
+updateStorage();
+displayTasks();
 }
 
-    function deleteTask(newTask) {
+    function deleteTask(newTask, index) {
     const deleteButton = document.createElement('button')
     deleteButton.textContent = 'Delete'
         deleteButton.classList.add("delete");
@@ -29,12 +31,14 @@ editTask(newTask, taskText);
     newTask.appendChild(deleteButton)
     deleteButton.onclick = function () {
         if (confirm("Do you want to delete this task?")) {
-        newTask.remove();
+        tasks.splice(index, 1);
+updateStorage();
+displayTasks();
         }
     }
     }
 
-    function editTask(newTask,taskText) {
+    function editTask(newTask,taskText, index) {
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add("edit");
@@ -44,7 +48,37 @@ editTask(newTask, taskText);
         editButton.onclick = function () {
             const updatedTask = prompt("Edit your task", taskText.textContent);
             if (updatedTask !== null && updatedTask.trim() !== "") {
-            taskText.textContent = updatedTask;
+            tasks[index] = updatedTask;
+updateStorage();
+displayTasks();
     }
         }
     }
+
+    window.onload = function () {
+    const savedTasks = localStorage.getItem("tasks");
+
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+    }
+    displayTasks();
+}
+
+function displayTasks() {
+
+const tasklist = document.getElementById('taskList')
+ tasklist.innerHTML = "";
+
+ tasks.forEach(function(task, index) {
+    const newTask =document.createElement('li')
+
+const taskText = document.createElement("span");
+taskText.textContent = task;
+
+newTask.appendChild(taskText)
+tasklist.appendChild(newTask);
+
+deleteTask(newTask, index);
+editTask(newTask, taskText, index);
+});
+}
